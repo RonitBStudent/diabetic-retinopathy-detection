@@ -1,0 +1,61 @@
+# Data Configuration
+data_dir: "/Users/Ronit/Downloads/archive"
+train_csv: "/Users/Ronit/Downloads/archive/train.csv"
+test_csv: "/Users/Ronit/Downloads/archive/train.csv"
+img_dir: "/Users/Ronit/Downloads/archive/colored_images"
+img_size: 224
+
+# Model Configuration
+model_name: "efficientnet_b4"
+pretrained: True
+num_classes: 1
+
+# Training Configuration - Optimized for M4 Mac
+batch_size: 16  # Reduced for M4 memory
+gradient_accumulation: 2  # Simulate larger batch size
+eval_interval: 1  # Evaluate every epoch
+epochs: 30
+lr: 0.0001
+weight_decay: 1e-4
+patience: 5  # Early stopping patience
+
+# Logging
+wandb_project: "diabetic_retinopathy"
+run_name: "aptos_binary_m4_optimized"
+save_dir: "checkpoints"
+
+# Data Augmentation
+train_aug:
+  - type: RandomResizedCrop
+    height: 224
+    width: 224
+    scale: [0.8, 1.0]
+  - type: HorizontalFlip
+    p: 0.5
+  - type: VerticalFlip
+    p: 0.5
+  - type: RandomBrightnessContrast
+    brightness_limit: 0.2
+    contrast_limit: 0.2
+    p: 0.5
+  - type: ShiftScaleRotate
+    shift_limit: 0.0625
+    scale_limit: 0.1
+    rotate_limit: 15
+    p: 0.5
+  - type: Normalize
+    mean: [0.485, 0.456, 0.406]
+    std: [0.229, 0.224, 0.225]
+  - type: ToTensorV2
+
+val_aug:
+  - type: Resize
+    height: 256
+    width: 256
+  - type: CenterCrop
+    height: 224
+    width: 224
+  - type: Normalize
+    mean: [0.485, 0.456, 0.406]
+    std: [0.229, 0.224, 0.225]
+  - type: ToTensorV2
