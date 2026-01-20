@@ -1,0 +1,19 @@
+# Data Configuration
+train_csv: "data/train.csv"
+val_csv: "data/val.csv"
+test_csv: "data/test.csv"  # Added test set path
+img_dir: "data/images"
+
+# Model Configuration
+pretrained: True
+img_size: 224
+
+# Training Configuration
+batch_size: 32
+epochs: 30
+lr: 0.0001
+
+# Logging
+wandb_project: "diabetic_retinopathy"
+run_name: "efficientnet_b0"
+save_dir: "checkpoints"
